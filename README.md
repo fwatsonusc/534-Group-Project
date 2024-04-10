@@ -40,3 +40,10 @@ This repository contains code and resources for developing a Large Language Mode
 ## License
 
 [Specify the license under which the code and resources in this repository are distributed.]
+
+----------------------------------------------------------------------------------------------------------------------------
+
+## Instructions for running application via site
+! pip install Flask vaderSentiment
+python app.py
+
