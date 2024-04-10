@@ -1,0 +1,5 @@
+If someone cannot connect to a company VPN with an authentication error, they may have to reset their password. They should reach out to an advisor or IT. 
+If someone tries to open an application and it crashes immediately, they should contact IT or update the software. 
+If someone's computer is running slow for ostensibly no reason, they may have too many background tasks running, such as desktop items or task bar items. 
+You cannot recover an accidentally deleted file, unless you're using word, in which case you can use Autorecover. We recommend using a cloud service like Google Drive to prevent things like this from happening. 
+Usually, if your keyboard's keys are not working properly, you have to replace the keyboard. 
