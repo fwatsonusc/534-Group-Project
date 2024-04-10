@@ -1,1 +1,3 @@
+pip install Flask vaderSentiment
 
+python app.py
