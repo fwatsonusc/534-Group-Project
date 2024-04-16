@@ -1,0 +1,14 @@
+ 
+
+
+ NEW USER 
+
+User: my computer isn't working. word isn't opening
+Bot: Try restarting your PC first. If Word still doesn't open, repair your Office installation: Go to Control Panel > Programs > Programs and Features > Microsoft Office > Change > Repair.
+
+User: that didn't work. 
+Bot: It seems serious. Try uninstalling and reinstalling Microsoft Office. Make sure to reinstall from the official Microsoft Office site to avoid problems. Back up your files first!
+
+User: NO! it deleted everything! i worked so hard on that stuff 
+Bot: I'm really sorry to hear that. Go to the Recycle Bin and restore the files. For future, always back up data. You can use File History in Windows for automatic backups. Don't lose heart.
+
