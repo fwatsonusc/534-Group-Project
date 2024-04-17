@@ -23,7 +23,7 @@ def write_transcript_to_gcs(text):
     bucket_name = "transcripts_534_bucket"
 
     bucket = storage_client.bucket(bucket_name)
-    blob = bucket.blob('transcripts.txt')
+    blob = bucket.blob('transcripts-unemotional.txt')
 
     if blob.exists():
         current_contents = blob.download_as_text()
@@ -35,13 +35,8 @@ def write_transcript_to_gcs(text):
 
 def update_system_message(sentiment):
 
-    # Customize the system message based on sentiment
-    if sentiment == 'Positive':
-        prompt = "You are an IT assistant. Be Helpful, Be positive, Be energetic, Be involved, Be concise, as the user is already in a good mood! Don't let the user down! Be like a human! Limit to 50 words"
-    elif sentiment == 'Negative':
-        prompt = "You are an IT assistant. Be Helpful, Be sympathetic, Be understanding, Be concise, The user is having a negative mood, so be understanding and calming. Be like a human! Limit to 50 words"
-    else:
-        prompt = "You are an IT assistant. Be Helpful, Be professional, Be active,Be concise, Focus on the problems and solutions, as your client is in a neutral mood. Be concise and to the point, Limit to 50 words"
+   
+    prompt = "You are an IT assistant. Be helpful, professional, and active. Focus on the problems and solutions without making adjustments for how you perceive the client's emotion, always assuming that your client is in a neutral mood. Be concise and to the point, Limit to 50 words"
     return {"role": "system", "content": prompt}
 
 def create_initial_message(initial_input):
@@ -123,6 +118,10 @@ interface = gr.Interface(
     live=False
 )
 
+# interface = gr.Interface(fn=chatbot,
+#                          inputs=gr.Textbox(lines=2, placeholder="Type something..."),
+#                          outputs=gr.Textbox())
+
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 7860))  # Default to 7860 if PORT not set
+    port = int(os.environ.get('PORT', 7860))  # Default to 8080 if PORT not set
     interface.launch(server_name='0.0.0.0', server_port=port)

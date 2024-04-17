@@ -1,0 +1,4 @@
+gradio
+openai
+nltk
+google-cloud-storage
