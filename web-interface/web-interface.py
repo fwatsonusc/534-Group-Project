@@ -4,6 +4,7 @@ import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 import gradio as gr
 from google.cloud import storage
+import random
 
 # Vader Dictionary
 nltk.download('vader_lexicon')
@@ -17,6 +18,7 @@ client = OpenAI(
 
 messages = []
 chat_history = []
+participant_id = "Your Participant ID will show up here. "
 
 def write_transcript_to_gcs(text):
     storage_client = storage.Client()
@@ -82,14 +84,21 @@ def chatbot(input, state, start_over):
     # Start the conversation with the initial message
     global messages
     global chat_history
-    if start_over:
+    global participant_id
+    # if start_over:
+    #     chat_history = []  # Reset the state
+    #     write_transcript_to_gcs(" \n\n\n NEW USER \n\n")
+    #     start_over = False
+    # if chat_history is None:
+    #     chat_history = []  # Initialize state if it's the first call
+    if state[0] == "initialize":
         chat_history = []  # Reset the state
-        write_transcript_to_gcs(" \n\n\n NEW USER \n\n")
-        start_over = False
-    if chat_history is None:
-        chat_history = []  # Initialize state if it's the first call
-    if len(messages) == 0:
+        participant_id = str(random.randint(1000000000, 9999999999))
+        state[0] = ""
+        state[1] = participant_id
+        write_transcript_to_gcs(f" \n\n\n NEW USER - {participant_id} \n\n")
         messages = create_initial_message(input)
+
     
     messages.append({"role": "user", "content": input})
     response = continue_conversation()
@@ -104,19 +113,21 @@ def chatbot(input, state, start_over):
     write_transcript_to_gcs(f"User: {input}\nBot: {assistant_message}\n\n")
     formatted_output = "\n".join(chat_history)
     
-    return chat_history, formatted_output, start_over
+    return chat_history, formatted_output, participant_id, False
 
 interface = gr.Interface(
     fn=chatbot,
     inputs=[
         gr.Textbox(label="Your Message"),
-        gr.State(),  # State input to maintain history
+        gr.State(value=["initialize", ""]),  # State input to maintain history
         gr.Checkbox(label="Start Over", value=True, visible=False),
     ],
     outputs=[
         gr.State(),  # State output to update history
         gr.Textbox(label="Conversation", lines=10),  # Show the conversation history
-        gr.Checkbox(visible=False)
+        gr.Label(label="ParticipantID"),
+        gr.Checkbox(visible=False),
+
     ],
     title="IT Assistant Chatbot",
     allow_flagging=False,
